@@ -1,4 +1,4 @@
-package com.example.anew.api;
+package com.example.anew.NetworkUtil;
 
 import android.app.Application;
 
@@ -6,13 +6,13 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
-public class NetworkCall extends Application {
+public class NetworkApplication extends Application {
 
-    private static final String TAG = "NetworkCall";
+    private static final String TAG = "NetworkApplication";
 
     //Declare a private RequestQueue variable
     private RequestQueue requestQueue;
-    private static NetworkCall mInstance;
+    private static NetworkApplication mInstance;
 
     @Override
     public void onCreate() {
@@ -20,7 +20,7 @@ public class NetworkCall extends Application {
         mInstance = this;
     }
 
-    public static synchronized NetworkCall getInstance()
+    public static synchronized NetworkApplication getInstance()
     {
         return mInstance;
     }

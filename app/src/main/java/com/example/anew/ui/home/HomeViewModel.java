@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.anew.api.FetchNews;
+import com.example.anew.NetworkUtil.NetworkCall;
 
 public class HomeViewModel extends ViewModel {
 
@@ -13,7 +13,7 @@ public class HomeViewModel extends ViewModel {
     public HomeViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is home fragment");
-        FetchNews.headLine("top-headlines", "country=us");
+        NetworkCall.headLine("top-headlines", "country=us");
     }
 
     public LiveData<String> getText() {

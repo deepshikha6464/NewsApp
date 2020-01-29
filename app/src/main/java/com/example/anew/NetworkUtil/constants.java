@@ -1,6 +1,4 @@
-package com.example.anew.api;
-
-import com.example.anew.R;
+package com.example.anew.NetworkUtil;
 
 public class constants {
     private static final String TAG = "constants";

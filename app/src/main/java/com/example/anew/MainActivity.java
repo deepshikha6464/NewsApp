@@ -2,7 +2,6 @@ package com.example.anew;
 
 import android.os.Bundle;
 
-import com.example.anew.api.FetchNews;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -36,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              //  FetchNews.headLine("top-headlines", "country=us");
+              //  NetworkCall.headLine("top-headlines", "country=us");
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
