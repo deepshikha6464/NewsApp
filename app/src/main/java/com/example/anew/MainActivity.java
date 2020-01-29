@@ -2,6 +2,7 @@ package com.example.anew;
 
 import android.os.Bundle;
 
+import com.example.anew.Repository.NewsRepository;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -18,24 +19,26 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.Menu;
 
 public class MainActivity extends AppCompatActivity {
-
+    private static final String TAG = "MainActivity";
     private AppBarConfiguration mAppBarConfiguration;
-
+    NewsRepository newsRepository;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        newsRepository = new NewsRepository();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              //  NetworkCall.headLine("top-headlines", "country=us");
+              //  NetworkCall.fetchNews("top-headlines", "country=us");
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
@@ -53,7 +56,17 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-    }
+
+        final SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swipe);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+             @Override
+             public void onRefresh() {
+                 NewsRepository newsRepository = new NewsRepository();
+
+               swipeRefreshLayout.setRefreshing(false);
+               }
+              });
+                }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

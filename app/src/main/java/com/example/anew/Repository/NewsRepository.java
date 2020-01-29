@@ -2,6 +2,7 @@ package com.example.anew.Repository;
 
 import android.util.Log;
 
+import com.example.anew.NetworkUtil.NetworkCall;
 import com.example.anew.model.NewsModel;
 
 import org.json.JSONArray;
@@ -14,6 +15,11 @@ import java.util.List;
 public class NewsRepository {
     private static final String TAG = "NewsRepository";
     public static List<NewsModel> newsModelList;
+
+    public NewsRepository() {
+        NetworkCall.fetchNews("top-headlines", "country=us");
+        Log.d(TAG, "NewsRepository: called");
+    }
 
     public static void dataParsing(JSONObject jsonResponse){
         String id,name,author,url,urlToImage,title,description,publishedAt,content;

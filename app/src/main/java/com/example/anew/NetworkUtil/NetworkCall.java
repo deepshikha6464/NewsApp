@@ -23,7 +23,8 @@ import static com.example.anew.Repository.NewsRepository.dataParsing;
 public class NetworkCall {
     private static final String TAG = "NetworkCall";
 
-    public static void headLine(String endpoint, String query){
+    public static void fetchNews(String endpoint, String query){
+
        String url = API+endpoint+"?"+query+"&apiKey="+API_KEY;
       //  String url = "https://newsapi.org/v2/top-headlines?country=us&apiKey=ab5c10fe89da4cb799e0647ab64ac1f4";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -31,8 +32,7 @@ public class NetworkCall {
                     @Override
                     public void onResponse(JSONObject response) {
                              dataParsing(response);
-
-                    }
+                                                 }
                 },
                 new Response.ErrorListener() {
                     @Override
@@ -42,7 +42,8 @@ public class NetworkCall {
                 }
         );
 
-        NetworkApplication.getInstance().addToRequestQueue(jsonObjectRequest, "headLine");
+        NetworkApplication.getInstance().addToRequestQueue(jsonObjectRequest, "fetchNews");
+
     }
 
 
