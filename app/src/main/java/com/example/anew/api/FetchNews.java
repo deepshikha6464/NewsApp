@@ -42,8 +42,14 @@ public class FetchNews {
 
                                 String id = source.getString("id");
                                 String name = source.getString("name");
-                             //todo   String author = articles.getString("author").toString();
-                                Log.d(TAG, "onResponse: " + id+name);
+                                String author = articles.getJSONObject(i).getString("author");
+                                String title = articles.getJSONObject(i).getString("title");
+                                String description = articles.getJSONObject(i).getString("description");
+                                String url = articles.getJSONObject(i).getString("url");
+                                String urlToImage = articles.getJSONObject(i).getString("urlToImage");
+                                String publishedAt = articles.getJSONObject(i).getString("publishedAt");
+                                String content = articles.getJSONObject(i).getString("content");
+                                Log.d(TAG, "onResponse: "  +" "+ title);
                             }
 
 
