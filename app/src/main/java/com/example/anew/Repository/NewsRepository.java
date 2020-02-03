@@ -14,16 +14,18 @@ import java.util.List;
 
 public class NewsRepository {
     private static final String TAG = "NewsRepository";
-    public static List<NewsModel> newsModelList;
+    public static ArrayList<NewsModel> newsModelList = null;
 
-    public NewsRepository() {
+
+    public void NewsRepository() {
         NetworkCall.fetchNews("top-headlines", "country=us");
         Log.d(TAG, "NewsRepository: called");
+        return  ;
     }
 
-    public static void dataParsing(JSONObject jsonResponse){
+    public static ArrayList<NewsModel> dataParsing(JSONObject jsonResponse){
         String id,name,author,url,urlToImage,title,description,publishedAt,content;
-        try {
+              try {
             ;
             JSONObject jsonObject= new JSONObject(jsonResponse.toString());
             String status = jsonObject.getString("status");
@@ -46,8 +48,7 @@ public class NewsRepository {
                     urlToImage = articles.getJSONObject(i).getString("urlToImage");
                     publishedAt = articles.getJSONObject(i).getString("publishedAt");
                     content = articles.getJSONObject(i).getString("content");
-                   // Log.d(TAG, "onResponse: " + " " + title);
-                    NewsModel newsModel = new NewsModel(id,name,author,title,description,url,urlToImage,publishedAt,content);
+                  NewsModel newsModel = new NewsModel(id,name,author,title,description,url,urlToImage,publishedAt,content);
                   newsModelList.add(newsModel);
                 }
                 Log.d(TAG, "dataParsing: "+ newsModelList.size());
@@ -56,5 +57,6 @@ public class NewsRepository {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        return newsModelList;
     }
    }

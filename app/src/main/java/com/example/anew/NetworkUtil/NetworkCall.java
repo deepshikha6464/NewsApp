@@ -6,10 +6,13 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.anew.model.NewsModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import static com.example.anew.NetworkUtil.constants.API;
 import static com.example.anew.NetworkUtil.constants.API_KEY;
@@ -22,8 +25,7 @@ import static com.example.anew.Repository.NewsRepository.dataParsing;
  */
 public class NetworkCall {
     private static final String TAG = "NetworkCall";
-
-    public static void fetchNews(String endpoint, String query){
+     public static void fetchNews(String endpoint, String query){
 
        String url = API+endpoint+"?"+query+"&apiKey="+API_KEY;
       //  String url = "https://newsapi.org/v2/top-headlines?country=us&apiKey=ab5c10fe89da4cb799e0647ab64ac1f4";
@@ -31,7 +33,8 @@ public class NetworkCall {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                             dataParsing(response);
+                    dataParsing(response);
+                        Log.d(TAG, "onResponse: " + dataParsing(response));
                                                  }
                 },
                 new Response.ErrorListener() {
@@ -43,6 +46,8 @@ public class NetworkCall {
         );
 
         NetworkApplication.getInstance().addToRequestQueue(jsonObjectRequest, "fetchNews");
+        return  ;
+
 
     }
 
