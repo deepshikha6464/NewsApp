@@ -12,8 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.android.volley.Response;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.anew.R;
 import com.example.anew.model.NewsModel;
+
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +27,15 @@ import java.util.List;
 public class NewsAdapter extends RecyclerView.Adapter< NewsAdapter.NewsViewHolder> {
     private static final String TAG = "NewsAdapter";
     List<NewsModel> newsList ;
-
-    public NewsAdapter(List<NewsModel> newsList) {
+Context context;
+    public NewsAdapter( List<NewsModel> newsList) {
         this.newsList = newsList;
+
+    }
+
+    public NewsAdapter(List<NewsModel> newsList, Context context) {
+        this.newsList = newsList;
+        this.context = context;
     }
 
     @NonNull
@@ -38,6 +50,9 @@ public class NewsAdapter extends RecyclerView.Adapter< NewsAdapter.NewsViewHolde
     public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
         NewsModel news = newsList.get(position);
         holder.headline.setText(news.getTitle());
+        Glide.with(context)
+                .load(news.getUrlToImage())
+                .into(holder.image);
 
     }
 

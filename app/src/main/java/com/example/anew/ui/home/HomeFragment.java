@@ -89,7 +89,7 @@ List<NewsModel> newsModels;
                     @Override
                     public void onResponse(JSONObject response) {
                         dataParsing(response);
-                        mNewsAdapter = new NewsAdapter(newsModels);
+                        mNewsAdapter = new NewsAdapter(newsModels, getActivity());
                         recyclerView.setAdapter(mNewsAdapter);
 
                     }
