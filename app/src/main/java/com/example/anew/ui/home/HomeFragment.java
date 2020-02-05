@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -37,7 +38,7 @@ import static com.example.anew.NetworkUtil.constants.API_KEY;
 import static com.example.anew.Repository.NewsRepository.dataParsing;
 
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements NewsAdapter.ItemClickListener {
     private static final String TAG = "HomeFragment";
 RecyclerView recyclerView;
 NewsAdapter mNewsAdapter;
@@ -142,4 +143,8 @@ List<NewsModel> newsModels;
         return ;
     }
 
+    @Override
+    public void onItemClick(View view, int position) {
+        Log.d(TAG, "onItemClick: ");
+    }
 }
