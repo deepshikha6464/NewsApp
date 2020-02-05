@@ -23,17 +23,19 @@
                     android:layout_height="wrap_content"
                     android:text="Top HeadLines"
                     android:padding="2dp"
+                    android:id="@+id/headline"
                     android:layout_margin="5dp"
                     android:includeFontPadding="true"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:background="@drawable/button_border"
+                     android:background="@drawable/button_border"
                     />
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Business"
+                    android:id="@+id/business"
                     android:padding="2dp"
                     android:layout_margin="5dp"
                     android:includeFontPadding="true"
@@ -45,6 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Entertainment"
+                    android:id="@+id/entertainment"
                     android:padding="2dp"
                     android:layout_margin="5dp"
                     android:includeFontPadding="true"
@@ -52,21 +55,23 @@
                     android:paddingRight="20dp"
                     android:background="@drawable/button_border"
                     />
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="General"
-                    android:padding="2dp"
-                    android:layout_margin="5dp"
-                    android:includeFontPadding="true"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:background="@drawable/button_border"
-                    />
+<!--                <Button-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="General"-->
+<!--                    android:id="@+id/general"-->
+<!--                    android:padding="2dp"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:includeFontPadding="true"-->
+<!--                    android:paddingLeft="20dp"-->
+<!--                    android:paddingRight="20dp"-->
+<!--                    android:background="@drawable/button_border"-->
+<!--                    />-->
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Health"
+                    android:id="@+id/health"
                     android:padding="2dp"
                     android:layout_margin="5dp"
                     android:includeFontPadding="true"
@@ -78,6 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Science"
+                    android:id="@+id/science"
                     android:padding="2dp"
                     android:layout_margin="5dp"
                     android:includeFontPadding="true"
@@ -89,6 +95,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sports"
+                   android:id="@+id/sports"
                     android:padding="2dp"
                     android:layout_margin="5dp"
                     android:includeFontPadding="true"
@@ -100,6 +107,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Technology"
+                   android:id="@+id/technology"
                     android:padding="2dp"
                     android:layout_margin="5dp"
                     android:includeFontPadding="true"

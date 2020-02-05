@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,11 +41,13 @@ import static com.example.anew.NetworkUtil.constants.API_KEY;
 import static com.example.anew.Repository.NewsRepository.dataParsing;
 
 
-public class HomeFragment extends Fragment implements NewsAdapter.ItemClickListener {
+public class HomeFragment extends Fragment implements NewsAdapter.ItemClickListener, View.OnClickListener {
     private static final String TAG = "HomeFragment";
 RecyclerView recyclerView;
 NewsAdapter mNewsAdapter;
 List<NewsModel> newsModels;
+Button head,gen,sci,spo,tech,busi,ent;
+String query;
 
 
 //    private HomeViewModel homeViewModel;
@@ -72,11 +75,32 @@ List<NewsModel> newsModels;
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news,
                 container, false);
-                recyclerView = view.findViewById(R.id.rv_news);
+        head = view.findViewById(R.id.headline);
+        ent = view.findViewById(R.id.entertainment);
+        spo = view.findViewById(R.id.sports);
+        sci = view.findViewById(R.id.science);
+        busi = view.findViewById(R.id.business);
+        tech = view.findViewById(R.id.technology);
+
+       head.setOnClickListener(this);
+       ent.setOnClickListener(this);
+       spo.setOnClickListener(this);
+       sci.setOnClickListener(this);
+       busi.setOnClickListener(this);
+       tech.setOnClickListener(this);
+        recyclerView = view.findViewById(R.id.rv_news);
                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
+busi.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+
+    }
+});
+
 
         fetchNews("top-headlines", "country=us");
+        //fetchNews("top-headlines", "category=entertainment");
                return view;
 
 
@@ -84,6 +108,7 @@ List<NewsModel> newsModels;
 
 
     public  void fetchNews(String endpoint, String query){
+
 
         String url = API+endpoint+"?"+query+"&apiKey="+API_KEY;
         //  String url = "https://newsapi.org/v2/top-headlines?country=us&apiKey=ab5c10fe89da4cb799e0647ab64ac1f4";
@@ -148,5 +173,48 @@ List<NewsModel> newsModels;
     @Override
     public void onItemClick(View view, int position) {
         Log.d(TAG, "onItemClick: ");
+    }
+//gives category - part of query in api
+    private String getCategory(int itemResId) {
+        String category = null ;
+        switch (itemResId) {
+            case R.id.headline:
+                category = "general";
+                break;
+//            case R.id.general:
+//                category = "general";
+//                break;
+            case R.id.entertainment:
+                category = "entertainment";
+                break;
+            case R.id.technology:
+                category = "technology";
+                break;
+            case R.id.sports:
+                category = "sports";
+                break;
+            case R.id.science:
+                category = "science";
+                break;
+            case R.id.business:
+                category = "business";
+                break;
+        }
+        return category;
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+       query=  makeQuery(id);
+        fetchNews("top-headlines", query);
+
+    }
+
+    private String makeQuery(int id)
+    {
+        String category = getCategory(id);
+        String query = "country=in&category="+category;
+        return query;
     }
 }
