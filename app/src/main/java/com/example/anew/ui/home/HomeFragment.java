@@ -1,5 +1,7 @@
 package com.example.anew.ui.home;
 
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -70,7 +72,7 @@ List<NewsModel> newsModels;
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news,
                 container, false);
-              recyclerView = view.findViewById(R.id.rv_news);
+                recyclerView = view.findViewById(R.id.rv_news);
                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
 
