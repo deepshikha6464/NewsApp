@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -46,28 +48,9 @@ public class HomeFragment extends Fragment implements NewsAdapter.ItemClickListe
 RecyclerView recyclerView;
 NewsAdapter mNewsAdapter;
 List<NewsModel> newsModels;
-Button head,gen,sci,spo,tech,busi,ent;
+Button head,gen,sci,spo,tech,busi,ent,hel;
 String query;
-
-
-//    private HomeViewModel homeViewModel;
-//
-//    public View onCreateView(@NonNull LayoutInflater inflater,
-                           //  ViewGroup container, Bundle savedInstanceState) {
-//        homeViewModel =
-//                ViewModelProviders.of(this).get(HomeViewModel.class);
-//        View root = inflater.inflate(R.layout.fragment_news, container, false);
-        //final TextView textView = root.findViewById(R.id.text_gallery);
-
-
-//         homeViewModel.getText().observe(this, new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
-       // return root;
-   // }
+LottieAnimationView rvPlaceHolder,rvNoData,newData;
 
 
     @Nullable
@@ -81,6 +64,12 @@ String query;
         sci = view.findViewById(R.id.science);
         busi = view.findViewById(R.id.business);
         tech = view.findViewById(R.id.technology);
+        hel = view.findViewById(R.id.health);
+
+        rvPlaceHolder = view.findViewById(R.id.rvPlaceHolder);
+        rvNoData = view.findViewById(R.id.rvNoData);
+        newData = view.findViewById(R.id.rvNewData);
+
 
        head.setOnClickListener(this);
        ent.setOnClickListener(this);
@@ -88,19 +77,16 @@ String query;
        sci.setOnClickListener(this);
        busi.setOnClickListener(this);
        tech.setOnClickListener(this);
+       hel.setOnClickListener(this);
         recyclerView = view.findViewById(R.id.rv_news);
                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
-busi.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
 
-    }
-});
-
-
-        fetchNews("top-headlines", "country=us");
-        //fetchNews("top-headlines", "category=entertainment");
+         recyclerView.setVisibility(View.GONE);
+         rvPlaceHolder.setVisibility(View.VISIBLE);
+         newData.setVisibility(View.GONE);
+        //fetchNews("everything", "");
+        fetchNews("top-headlines", "country=in");
                return view;
 
 
@@ -119,6 +105,10 @@ busi.setOnClickListener(new View.OnClickListener() {
                         dataParsing(response);
                         mNewsAdapter = new NewsAdapter(newsModels, getActivity());
                         recyclerView.setAdapter(mNewsAdapter);
+                        recyclerView.setVisibility(View.VISIBLE);
+                        rvPlaceHolder.setVisibility(View.GONE);
+                        newData.setVisibility(View.GONE);
+                        rvNoData.setVisibility(View.GONE);
 
                     }
                 },
@@ -126,6 +116,9 @@ busi.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d(TAG, "onErrorResponse: "+error);
+                        recyclerView.setVisibility(View.GONE);
+                        rvNoData.setVisibility(View.VISIBLE);
+                        rvPlaceHolder.setVisibility(View.GONE);
                     }
                 }
         );
@@ -199,6 +192,9 @@ busi.setOnClickListener(new View.OnClickListener() {
             case R.id.business:
                 category = "business";
                 break;
+                case R.id.health:
+                category = "health";
+                break;
         }
         return category;
     }
@@ -207,6 +203,8 @@ busi.setOnClickListener(new View.OnClickListener() {
     public void onClick(View v) {
         int id = v.getId();
        query=  makeQuery(id);
+        newData.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
         fetchNews("top-headlines", query);
 
     }
