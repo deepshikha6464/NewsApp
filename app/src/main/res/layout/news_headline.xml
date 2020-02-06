@@ -9,6 +9,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/cardView"
         android:layout_marginBottom="4dp"
         app:cardCornerRadius="10dp"
         >
@@ -16,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:weightSum="100"
+            android:id="@+id/imageControl"
             android:orientation="vertical">
             <ImageView
                 android:layout_width="match_parent"
@@ -55,6 +57,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:weightSum="100"
+                    android:id="@+id/buttonContol"
                     android:layout_weight="40"
 
                     >
@@ -77,9 +80,9 @@
                         android:layout_height="60dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
-                        app:lottie_autoPlay="false"
+                        app:lottie_autoPlay="true"
                         app:lottie_fileName="load.json"
-                        app:lottie_loop="false"
+                        app:lottie_loop="true"
                         android:layout_weight="60"
                         app:lottie_speed="1.25" />
                     <!-- view Button -->
