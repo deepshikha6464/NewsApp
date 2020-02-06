@@ -58,6 +58,7 @@ Context context;
         holder.load.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                holder.load.playAnimation();
                 String url = news.getUrl();
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
