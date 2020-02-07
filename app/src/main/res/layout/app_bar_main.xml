@@ -13,18 +13,19 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_width="374dp"
+            android:layout_height="match_parent"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" >
+            app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <androidx.appcompat.widget.SearchView
-                android:layout_width="match_parent"
+                android:id="@+id/search"
                 android:layout_height="match_parent"
-                android:layoutDirection="rtl"
-                app:iconifiedByDefault="true"
+                android:layout_gravity="right|top"
+                android:layout_width="wrap_content"
                 android:animateLayoutChanges="true"
-                android:id="@+id/search"/>
+                android:layoutDirection="rtl"
+                app:iconifiedByDefault="true" />
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
