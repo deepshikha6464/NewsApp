@@ -17,11 +17,7 @@
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_gallery" />
 
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.anew.ui.slideshow.SearchFrag"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/searchFragment" />
+
 
     <fragment
         android:id="@+id/nav_tools"
