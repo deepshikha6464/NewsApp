@@ -24,6 +24,7 @@
                 android:layout_gravity="right|top"
                 android:layout_width="wrap_content"
                 android:animateLayoutChanges="true"
+                android:layout_marginRight="5dp"
                 android:layoutDirection="rtl"
                 app:iconifiedByDefault="true" />
         </androidx.appcompat.widget.Toolbar>

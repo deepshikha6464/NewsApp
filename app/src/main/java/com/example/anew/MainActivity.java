@@ -1,11 +1,12 @@
 package com.example.anew;
 
-import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.anew.NetworkUtil.NetworkCall;
 import com.example.anew.Repository.NewsRepository;
 import com.example.anew.model.NewsModel;
+import com.example.anew.ui.home.HomeFragment;
 import com.example.anew.ui.slideshow.SearchFrag;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -14,6 +15,8 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     NewsRepository newsRepository;
     SearchView searchView;
+
        @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,12 +56,10 @@ public class MainActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 Log.d(TAG, "onQueryTextSubmit: "+query);
                 searchView.clearFocus();
-
-//                SearchFrag fragment = new SearchFrag();
-//                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.id.nav_host_fragment, fragment);
-//                transaction.commit();
-
+                Intent intent=new Intent();
+                intent.setAction("query");
+                intent.putExtra("query",query);
+                sendBroadcast(intent);
                 return false;
             }
 
@@ -66,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onQueryTextChange: "+ newText);
                 return false;
             }
-        });
+                    });
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -120,10 +122,14 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (!searchView.isIconified()) {
             searchView.onActionViewCollapsed();
+            this.getFragmentManager().popBackStack();
+            HomeFragment.buttonContainer.setVisibility(View.VISIBLE);
         } else {
             super.onBackPressed();
         }
 
 
     }
+
+
 }
