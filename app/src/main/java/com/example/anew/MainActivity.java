@@ -15,7 +15,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -34,36 +33,37 @@ public class MainActivity extends AppCompatActivity {
 
        @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+           super.onCreate(savedInstanceState);
+           setContentView(R.layout.activity_main);
 
-        newsRepository = new NewsRepository();
+
+           newsRepository = new NewsRepository();
            NetworkCall.fetchNews("top-headlines", "country=us");
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+           Toolbar toolbar = findViewById(R.id.toolbar);
+           setSupportActionBar(toolbar);
 //search bar
-          searchView = findViewById(R.id.search);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Log.d(TAG, "onQueryTextSubmit: "+query);
-                searchView.clearFocus();
-                Intent intent=new Intent();
-                intent.setAction("query");
-                intent.putExtra("query",query);
-                sendBroadcast(intent);
-                return false;
-            }
+           searchView = findViewById(R.id.search);
+           searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+               @Override
+               public boolean onQueryTextSubmit(String query) {
+                   Log.d(TAG, "onQueryTextSubmit: " + query);
+                   searchView.clearFocus();
+                   Intent intent = new Intent();
+                   intent.setAction("query");
+                   intent.putExtra("query", query);
+                   sendBroadcast(intent);
+                   return false;
+               }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                Log.d(TAG, "onQueryTextChange: "+ newText);
-                return false;
-            }
-                    });
+               @Override
+               public boolean onQueryTextChange(String newText) {
+                   Log.d(TAG, "onQueryTextChange: " + newText);
+                   return false;
+               }
+           });
 
-//        FloatingActionButton fab = findViewById(R.id.fab);
+           //        FloatingActionButton fab = findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -73,29 +73,30 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_news, R.id.nav_gallery,
-                R.id.nav_login, R.id.nav_settings)
-                .setDrawerLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+           DrawerLayout drawer = findViewById(R.id.drawer_layout);
+           NavigationView navigationView = findViewById(R.id.nav_view);
+           // Passing each menu ID as a set of Ids because each
+           // menu should be considered as top level destinations.
+           mAppBarConfiguration = new AppBarConfiguration.Builder(
+                   R.id.nav_news, R.id.nav_gallery,
+                   R.id.nav_login, R.id.nav_settings)
+                   .setDrawerLayout(drawer)
+                   .build();
+           NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+           NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+           NavigationUI.setupWithNavController(navigationView, navController);
 
-        final SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swipe);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-             @Override
-             public void onRefresh() {
-                 NewsRepository newsRepository = new NewsRepository();
+//           final SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swipe);
+//           swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//               @Override
+//               public void onRefresh() {
+//                   NewsRepository newsRepository = new NewsRepository();
+//
+//                   swipeRefreshLayout.setRefreshing(false);
+//               }
+//           });
 
-               swipeRefreshLayout.setRefreshing(false);
-               }
-              });
-                }
+       }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

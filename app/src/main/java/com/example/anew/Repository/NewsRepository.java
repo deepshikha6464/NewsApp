@@ -1,9 +1,15 @@
 package com.example.anew.Repository;
 
+import android.app.Application;
+import android.os.AsyncTask;
 import android.util.Log;
+
+import androidx.lifecycle.LiveData;
 
 import com.example.anew.NetworkUtil.NetworkCall;
 import com.example.anew.model.NewsModel;
+import com.example.anew.roomDB.NewsDAO;
+import com.example.anew.roomDB.NewsDatabase;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,7 +20,60 @@ import java.util.List;
 
 public class NewsRepository {
     private static final String TAG = "NewsRepository";
+    private NewsDAO mNewsDao;
+    private LiveData<List<NewsModel>> newsModels;
     public static ArrayList<NewsModel> newsModelList = null;
+
+    private LiveData<List<NewsModel>> mAllData;
+
+    public NewsRepository(Application application) {
+         NewsDatabase mdb = NewsDatabase.getDatabase(application);
+        this.mNewsDao = mdb.newsDAO();
+        this.mAllData = mNewsDao.getAllData();
+    }
+
+    public LiveData<List<NewsModel>> getAllData() {
+        return newsModels;
+    }
+
+//  non-UI thread to avoide app crash
+
+    public void insert(NewsModel dataItem) {
+        new insertAsyncTask(mNewsDao).execute(dataItem);
+    }
+
+    private static class insertAsyncTask extends AsyncTask<NewsModel, Void, Void> {
+        private NewsDAO mAsyncTaskDao;
+        insertAsyncTask(NewsDAO dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final NewsModel... params) {
+            mAsyncTaskDao.insertItem(params[0]);
+            return null;
+        }
+    }
+
+    public void deleteItem(NewsModel dataItem) {
+        new deleteAsyncTask(mNewsDao).execute(dataItem);
+    }
+
+    private static class deleteAsyncTask extends AsyncTask<NewsModel, Void, Void> {
+        private NewsDAO mAsyncTaskDao;
+        deleteAsyncTask(NewsDAO dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final NewsModel... params) {
+            mAsyncTaskDao.deleteItem(params[0]);
+            return null;
+        }
+    }
+
+
+
 
 
     public void NewsRepository() {

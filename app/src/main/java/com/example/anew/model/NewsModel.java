@@ -1,12 +1,39 @@
 package com.example.anew.model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "news_table")
 public class NewsModel {
     private static final String TAG = "NewsModel";
 
+    @PrimaryKey(autoGenerate = true)
+    int key;
     private String status;
     int totalResponse;
-    private String source, id,name, author, title, description,url,urlToImage,publishedAt,content;
+    private String source;
+    @ColumnInfo(name = "id")
+    private String id;
+    @ColumnInfo(name = "name")
+    private String name;
+    @ColumnInfo(name = "author")
+    private String author;
+    @ColumnInfo(name = "title")
+    private String title;
+    @ColumnInfo(name = "description")
+    private String description;
+    @ColumnInfo(name = "url")
+    private String url;
+    @ColumnInfo(name = "urlToImage")
+    private String urlToImage;
+    @ColumnInfo(name = "publishedAt")
+    private String publishedAt;
+    @ColumnInfo(name = "content")
+    private String content;
 
+    @Ignore
     public NewsModel() {
     }
 

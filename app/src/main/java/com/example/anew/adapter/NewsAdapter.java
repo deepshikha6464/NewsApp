@@ -115,7 +115,7 @@ Context context;
         @Override
         public void onClick(View v) {
 
-          //  myEasyFlipView.flipTheView();
+            myEasyFlipView.flipTheView();
             if (mClickListener != null) {
                 mClickListener.onItemClick(v, getAdapterPosition());
                }
