@@ -2,10 +2,9 @@ package com.example.anew;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import com.example.anew.NetworkUtil.NetworkCall;
 import com.example.anew.Repository.NewsRepository;
-import com.example.anew.ui.home.HomeFragment;
+import com.example.anew.ui.news.HomeFragment;
 
 import android.util.Log;
 import android.view.View;
@@ -21,7 +20,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.Menu;
 
@@ -35,9 +33,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
            super.onCreate(savedInstanceState);
            setContentView(R.layout.activity_main);
-
-
-           newsRepository = new NewsRepository();
+          // newsRepository = new NewsRepository();
            NetworkCall.fetchNews("top-headlines", "country=us");
 
            Toolbar toolbar = findViewById(R.id.toolbar);
@@ -124,6 +120,4 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-
 }

@@ -1,28 +1,23 @@
-package com.example.anew.ui.home;
+package com.example.anew.ui.news;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.SearchView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,13 +26,11 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.anew.MainActivity;
 import com.example.anew.NetworkUtil.NetworkApplication;
-import com.example.anew.NetworkUtil.NetworkCall;
 import com.example.anew.R;
-import com.example.anew.Repository.NewsRepository;
 import com.example.anew.adapter.NewsAdapter;
 import com.example.anew.model.NewsModel;
+import com.example.anew.roomDB.NewsViewModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,7 +42,6 @@ import java.util.List;
 import static android.view.View.*;
 import static com.example.anew.NetworkUtil.constants.API;
 import static com.example.anew.NetworkUtil.constants.API_KEY;
-import static com.example.anew.Repository.NewsRepository.dataParsing;
 
 
 public class HomeFragment extends Fragment implements NewsAdapter.ItemClickListener, OnClickListener {
@@ -61,11 +53,14 @@ Button head,gen,sci,spo,tech,busi,ent,hel;
 String query;
 public static  LinearLayout buttonContainer;
 LottieAnimationView rvPlaceHolder,rvNoData,newData;
+private NewsViewModel newsViewModel;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news,
                 container, false);
+        //view model
+        newsViewModel = ViewModelProviders.of(this).get(NewsViewModel.class);
         //ui for buttons
         head = view.findViewById(R.id.headline);
         ent = view.findViewById(R.id.entertainment);
@@ -100,9 +95,7 @@ LottieAnimationView rvPlaceHolder,rvNoData,newData;
          newData.setVisibility(GONE);
         //fetchNews("everything", "");
         fetchNews("top-headlines", "country=in");
-
-
-                       return view;
+           return view;
 
 
     }
@@ -118,7 +111,7 @@ LottieAnimationView rvPlaceHolder,rvNoData,newData;
                     @Override
                     public void onResponse(JSONObject response) {
                         dataParsing(response);
-                        mNewsAdapter = new NewsAdapter(newsModels, getActivity());
+                        mNewsAdapter = new NewsAdapter(newsModels, getContext());
                         recyclerView.setAdapter(mNewsAdapter);
                         recyclerView.setVisibility(VISIBLE);
                         rvPlaceHolder.setVisibility(GONE);

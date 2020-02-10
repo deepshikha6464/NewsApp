@@ -10,14 +10,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.example.anew.R;
 import com.example.anew.model.NewsModel;
+import com.example.anew.roomDB.NewsViewModel;
 import com.wajahatkarim3.easyflipview.EasyFlipView;
 
 import java.util.List;
@@ -26,11 +33,13 @@ import java.util.List;
 public class NewsAdapter extends RecyclerView.Adapter< NewsAdapter.NewsViewHolder> {
     private static final String TAG = "NewsAdapter";
     List<NewsModel> newsList ;
-Context context;
-    private ItemClickListener mClickListener;
-    public NewsAdapter( List<NewsModel> newsList) {
-        this.newsList = newsList;
+    Context context;
+    NewsViewModel newsViewModel;
+    private static ItemClickListener mClickListener;
 
+    public NewsAdapter(Context context) {
+//        this.newsList = newsList;
+this.context = context;
     }
 
     public NewsAdapter(List<NewsModel> newsList, Context context) {
@@ -44,17 +53,34 @@ Context context;
     public NewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Log.d(TAG, "onCreateViewHolder: ");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.flip_animation, parent, false);
+        newsViewModel = ViewModelProviders.of((FragmentActivity) parent.getContext()).get(NewsViewModel.class);
         return new NewsViewHolder(view,mClickListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final NewsViewHolder holder, int position) {
         final NewsModel news = newsList.get(position);
-        holder.headline.setText(news.getTitle());
+         holder.headline.setText(news.getTitle());
         Glide.with(context)
                 .load(news.getUrlToImage())
                 .into(holder.image);
         holder.content.setText(news.getDescription());
+
+        holder.save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.save.playAnimation();
+               newsViewModel.insertItem(news);
+//               newsViewModel.getAllData().observe((LifecycleOwner) context, new Observer<List<NewsModel>>() {
+//                   @Override
+//                   public void onChanged(List<NewsModel> newsModels) {
+//
+//                   }
+//               });
+                Toast.makeText(context,"saved",Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onSave " + newsViewModel.getAllData());
+            }
+        });
         holder.load.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,14 +105,15 @@ Context context;
                 context.startActivity(Intent.createChooser(sharingIntent, "Share via"));
             }
         });
-          }
+
+    }
 
     @Override
     public int getItemCount() {
         return newsList.size();
     }
 
-    public class NewsViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
+    public static class NewsViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
 
         //ui
         ImageView image;
@@ -98,7 +125,7 @@ Context context;
 
         public NewsViewHolder(@NonNull View itemView, ItemClickListener mClickListener) {
             super(itemView);
-            image = itemView.findViewById(R.id.imageView);
+           image = itemView.findViewById(R.id.imageView);
             headline = itemView.findViewById(R.id.headline);
             load = itemView.findViewById(R.id.view);
             save = itemView.findViewById(R.id.save);

@@ -130,9 +130,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
             android:visibility="visible"
-            android:id="@+id/rv_news">
-
-        </androidx.recyclerview.widget.RecyclerView>
+            android:id="@+id/rv_news"/>
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/rvPlaceHolder"
             android:layout_width="match_parent"

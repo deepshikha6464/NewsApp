@@ -10,7 +10,7 @@ public class NewsModel {
     private static final String TAG = "NewsModel";
 
     @PrimaryKey(autoGenerate = true)
-    int key;
+    public int key;
     private String status;
     int totalResponse;
     private String source;
