@@ -11,7 +11,7 @@ import com.example.anew.model.NewsModel;
 @Database(entities = {NewsModel.class},version = 1,exportSchema = false)
 public abstract class NewsDatabase extends RoomDatabase {
     private static NewsDatabase instance;
-
+ // Create a file storage based database
     public static NewsDatabase getDatabase(Context context){
         if(instance == null){
             instance = Room.databaseBuilder(context.getApplicationContext(),
