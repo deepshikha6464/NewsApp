@@ -29,7 +29,7 @@ public interface NewsDAO {
     LiveData<List<NewsModel>> getAllData();
 
     @Query("SELECT * FROM news_table")
-    public List<NewsModel> getAllSavedNews();
+    public LiveData<List<NewsModel>> getAllSavedNews();
 
     //Delete All
     @Query("DELETE FROM news_table")

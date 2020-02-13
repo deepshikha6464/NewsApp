@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.anew.NetworkUtil.NetworkCall;
 import com.example.anew.model.NewsModel;
@@ -23,8 +24,9 @@ import java.util.concurrent.ExecutionException;
 public class NewsRepository {
     private static final String TAG = "NewsRepository";
     private NewsDAO mNewsDao;
-  //  private LiveData<List<NewsModel>> newsModels;
-    public static ArrayList<NewsModel> newsModelList = null;
+   public static ArrayList<NewsModel> newsModelList = null;
+    private MutableLiveData<List<NewsModel>> mutableLiveData = new MutableLiveData<>();
+
 
     private LiveData<List<NewsModel>> mAllData;
 
@@ -38,7 +40,7 @@ public class NewsRepository {
        // mAllData = mNewsDao.getAllData();//repository has access to the DAO, it can make calls to the data access methods
         return mAllData;
     }
-
+//
 //  non-UI thread to avoide app crash
 
     public void insert(NewsModel dataItem) {
@@ -75,31 +77,13 @@ public class NewsRepository {
         }
     }
 //get data
-   public List<NewsModel> getAllSavedNews()
-   {
-       List<NewsModel> saveNews = null;
-       try {
-           saveNews = new getSavedNews(mNewsDao).execute().get();
-       } catch (ExecutionException e) {
-           e.printStackTrace();
-       } catch (InterruptedException e) {
-           e.printStackTrace();
-       }
-       return saveNews;
-   }
-private static class getSavedNews extends AsyncTask<Void,Void,List<NewsModel>>
-{   private NewsDAO saveDAO;
-    getSavedNews(NewsDAO dao)
-    {
-        saveDAO = dao;
+
+    public LiveData<List<NewsModel>> getAllSavedNews() {
+        return mNewsDao.getAllSavedNews();
     }
 
-    @Override
-    protected List<NewsModel> doInBackground(Void... voids) {
-        List<NewsModel> saveNews = saveDAO.getAllSavedNews();
-        return saveNews;
-    }
-}
+
+
 
 
     public void NewsRepository() {

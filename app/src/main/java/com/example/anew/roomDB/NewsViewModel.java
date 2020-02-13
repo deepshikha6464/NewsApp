@@ -15,6 +15,7 @@ public class NewsViewModel extends AndroidViewModel {
 
     private NewsRepository mNewsRepository;
     private LiveData<List<NewsModel>> mListLiveData;
+    private NewsModel news;
 
     public NewsViewModel(@NonNull Application application) {
         super(application);
@@ -25,7 +26,7 @@ public class NewsViewModel extends AndroidViewModel {
     public LiveData<List<NewsModel>> getAllData() {
         return mListLiveData;
     }
-    public List<NewsModel> getAllSavedData()
+    public LiveData<List<NewsModel>> getAllSavedData()
     {
         return mNewsRepository.getAllSavedNews();
     }
