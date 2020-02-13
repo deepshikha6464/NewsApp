@@ -69,6 +69,7 @@ this.context = context;
         holder.save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                holder.setIsRecyclable(false);
                 holder.save.playAnimation();
                newsViewModel.insertItem(news);
 //               newsViewModel.getAllData().observe((LifecycleOwner) context, new Observer<List<NewsModel>>() {
