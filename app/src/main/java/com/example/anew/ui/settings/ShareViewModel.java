@@ -1,4 +1,4 @@
-package com.example.anew.ui.share;
+package com.example.anew.ui.settings;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -10,7 +10,7 @@ public class ShareViewModel extends ViewModel {
 
     public ShareViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is share fragment");
+        mText.setValue("This is settings fragment");
     }
 
     public LiveData<String> getText() {

@@ -19,4 +19,8 @@
     <string name="api">https://newsapi.org/v2/</string>
     <string name="api_key">ab5c10fe89da4cb799e0647ab64ac1f4</string>
 
+    <string name="transition_simple_avatar">simple avatar</string>
+    <string name="transition_simple_name">simple name</string>
+    <string name="transition_simple_description">simple description</string>
+
 </resources>

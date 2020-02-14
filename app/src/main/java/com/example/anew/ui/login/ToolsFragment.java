@@ -1,4 +1,4 @@
-package com.example.anew.ui.tools;
+package com.example.anew.ui.login;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

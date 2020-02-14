@@ -15,9 +15,8 @@ public class NewsViewModel extends AndroidViewModel {
 
     private NewsRepository mNewsRepository;
     private LiveData<List<NewsModel>> mListLiveData;
-    private NewsModel news;
 
-    public NewsViewModel(@NonNull Application application) {
+        public NewsViewModel(@NonNull Application application) {
         super(application);
         mNewsRepository = new NewsRepository((application));
         mListLiveData = mNewsRepository.getAllData();

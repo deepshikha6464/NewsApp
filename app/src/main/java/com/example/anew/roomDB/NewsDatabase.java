@@ -13,10 +13,13 @@ public abstract class NewsDatabase extends RoomDatabase {
     private static NewsDatabase instance;
  // Create a file storage based database
     public static NewsDatabase getDatabase(Context context){
-        if(instance == null){
-            instance = Room.databaseBuilder(context.getApplicationContext(),
-                    NewsDatabase.class,
-                    NewsDatabase.class.getName()).build();
+        if(instance == null)
+        {
+            synchronized (NewsDatabase.class) {
+                instance = Room.databaseBuilder(context.getApplicationContext(),
+                        NewsDatabase.class,
+                        NewsDatabase.class.getName()).build();
+            }
         }
         return instance;
     }
