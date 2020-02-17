@@ -25,6 +25,9 @@ import com.bumptech.glide.Glide;
 import com.example.anew.R;
 import com.example.anew.model.NewsModel;
 import com.example.anew.roomDB.NewsViewModel;
+import com.example.anew.sessionManager;
+import com.example.anew.ui.login.ToolsFragment;
+import com.example.anew.ui.news.HomeFragment;
 import com.wajahatkarim3.easyflipview.EasyFlipView;
 
 import java.util.List;
@@ -36,15 +39,16 @@ public class NewsAdapter extends RecyclerView.Adapter< NewsAdapter.NewsViewHolde
     Context context;
     NewsViewModel newsViewModel;
     private static ItemClickListener mClickListener;
-
+sessionManager session;
     public NewsAdapter(Context context) {
 //        this.newsList = newsList;
 this.context = context;
     }
 
-    public NewsAdapter(List<NewsModel> newsList, Context context) {
+    public NewsAdapter(List<NewsModel> newsList, Context context ,sessionManager session) {
         this.newsList = newsList;
         this.context = context;
+        this.session = session;
        // this.mClickListener = itemClickListener;
     }
 
@@ -69,17 +73,17 @@ this.context = context;
         holder.save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.setIsRecyclable(false);
-                holder.save.playAnimation();
-               newsViewModel.insertItem(news);
-//               newsViewModel.getAllData().observe((LifecycleOwner) context, new Observer<List<NewsModel>>() {
-//                   @Override
-//                   public void onChanged(List<NewsModel> newsModels) {
-//
-//                   }
-//               });
-                Toast.makeText(context,"saved",Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onSave " + newsViewModel.getAllData());
+                if(session.isLoggedIn()) {
+                    holder.setIsRecyclable(false);
+                    holder.save.playAnimation();
+                    newsViewModel.insertItem(news);
+                    Toast.makeText(context, "saved", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "onSave " + newsViewModel.getAllData());
+                }
+                else
+                {
+                    Toast.makeText(context, "Login to save News", Toast.LENGTH_LONG).show();
+                }
             }
         });
         holder.load.setOnClickListener(new View.OnClickListener() {

@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,6 +32,7 @@ import com.example.anew.R;
 import com.example.anew.adapter.NewsAdapter;
 import com.example.anew.model.NewsModel;
 import com.example.anew.roomDB.NewsViewModel;
+import com.example.anew.sessionManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,11 +56,13 @@ String query;
 public static  LinearLayout buttonContainer;
 LottieAnimationView rvPlaceHolder,rvNoData,newData;
 private NewsViewModel newsViewModel;
+    sessionManager session;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news,
                 container, false);
+        session = new sessionManager(getActivity());
         //view model
         newsViewModel = ViewModelProviders.of(this).get(NewsViewModel.class);
         //ui for buttons
@@ -111,7 +115,7 @@ private NewsViewModel newsViewModel;
                     @Override
                     public void onResponse(JSONObject response) {
                         dataParsing(response);
-                        mNewsAdapter = new NewsAdapter(newsModels, getContext());
+                        mNewsAdapter = new NewsAdapter(newsModels, getContext(),session);
                         recyclerView.setAdapter(mNewsAdapter);
                         recyclerView.setVisibility(VISIBLE);
                         rvPlaceHolder.setVisibility(GONE);

@@ -2,6 +2,8 @@ package com.example.anew;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import com.bumptech.glide.Glide;
 import com.example.anew.NetworkUtil.NetworkCall;
 import com.example.anew.Repository.NewsRepository;
 import com.example.anew.ui.news.HomeFragment;
@@ -22,20 +24,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import static com.example.anew.sessionManager.KEY_EMAIL;
+import static com.example.anew.sessionManager.KEY_NAME;
+import static java.lang.Boolean.TRUE;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private AppBarConfiguration mAppBarConfiguration;
     NewsRepository newsRepository;
     SearchView searchView;
+    ImageView imageView;
+    TextView name, email;
+    sessionManager sessionManager;
 
        @Override
     protected void onCreate(Bundle savedInstanceState) {
            super.onCreate(savedInstanceState);
            setContentView(R.layout.activity_main);
-          // newsRepository = new NewsRepository();
-           NetworkCall.fetchNews("top-headlines", "country=us");
-
            Toolbar toolbar = findViewById(R.id.toolbar);
            setSupportActionBar(toolbar);
 //search bar
@@ -59,15 +67,6 @@ public class MainActivity extends AppCompatActivity {
                }
            });
 
-           //        FloatingActionButton fab = findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//
-//            }
-//        });
 
            DrawerLayout drawer = findViewById(R.id.drawer_layout);
            NavigationView navigationView = findViewById(R.id.nav_view);
@@ -82,15 +81,15 @@ public class MainActivity extends AppCompatActivity {
            NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
            NavigationUI.setupWithNavController(navigationView, navController);
 
-//           final SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swipe);
-//           swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//               @Override
-//               public void onRefresh() {
-//                   NewsRepository newsRepository = new NewsRepository();
-//
-//                   swipeRefreshLayout.setRefreshing(false);
-//               }
-//           });
+           imageView = findViewById(R.id.imageViewHeader);
+           name = findViewById(R.id.nameHeader);
+           email = findViewById(R.id.textView);
+
+         //  name.setText(sessionManager.KEY_NAME);
+//           email.setText(sessionManager.KEY_EMAIL);
+//           Glide.with(this)
+//                   .load(sessionManager.IMAGE_URL)
+//                   .into(imageView);
 
        }
 
@@ -118,6 +117,19 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
         }
 
+
+    }
+    public void setUserDetail()
+    {
+        sessionManager = new sessionManager(getApplication());
+       if(sessionManager.isLoggedIn() == TRUE)
+        {
+            name.setText(sessionManager.KEY_NAME);
+            email.setText(sessionManager.KEY_EMAIL);
+            Glide.with(this)
+                    .load(sessionManager.IMAGE_URL)
+                    .into(imageView);
+        }
 
     }
 }

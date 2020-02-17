@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.example.anew.R;
 import com.example.anew.model.NewsModel;
 import com.example.anew.roomDB.NewsViewModel;
+import com.example.anew.sessionManager;
 import com.wajahatkarim3.easyflipview.EasyFlipView;
 
 import java.util.List;
@@ -33,9 +34,11 @@ public class SaveAdapter extends RecyclerView.Adapter<SaveAdapter.SaveViewHolder
     private List<NewsModel> news;
     Context context;
     NewsViewModel newsViewModel;
-    public SaveAdapter(List<NewsModel> savedNews, Context context) {
+    sessionManager session;
+    public SaveAdapter(List<NewsModel> savedNews, Context context ,sessionManager session) {
         this.news = savedNews;
         this.context = context;
+        this.session = session;
     }
 
     @NonNull
@@ -49,45 +52,48 @@ public class SaveAdapter extends RecyclerView.Adapter<SaveAdapter.SaveViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull final SaveViewHolder holder, final int position) {
-        holder.headline.setText(news.get(position).getTitle());
-        Glide.with(context)
-                .load(news.get(position).getUrlToImage())
-                .into(holder.image);
-        holder.content.setText(news.get(position).getDescription());
+         {
+           // holder.nosave.setVisibility(View.GONE);
+            holder.headline.setText(news.get(position).getTitle());
+            Glide.with(context)
+                    .load(news.get(position).getUrlToImage())
+                    .into(holder.image);
+            holder.content.setText(news.get(position).getDescription());
 
-        holder.save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              //  holder.save.playAnimation();
-                Toast.makeText(context,"saved",Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onSave " + newsViewModel.getAllData());
-            }
-        });
-        holder.load.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                holder.load.playAnimation();
-                String url = news.get(position).getUrl();
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(url));
-                context.startActivity(i);
-            }
-        });
+            holder.save.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //  holder.save.playAnimation();
+                    Toast.makeText(context, "saved", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "onSave " + newsViewModel.getAllData());
+                }
+            });
+            holder.load.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    holder.load.playAnimation();
+                    String url = news.get(position).getUrl();
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    context.startActivity(i);
+                }
+            });
 
 
-        holder.share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                holder.share.playAnimation();
-                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-                sharingIntent.setType("text/plain");
-                String shareBody = news.get(position).getUrl();
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-                context.startActivity(Intent.createChooser(sharingIntent, "Share via"));
-            }
-        });
+            holder.share.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    holder.share.playAnimation();
+                    Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                    sharingIntent.setType("text/plain");
+                    String shareBody = news.get(position).getUrl();
+                    sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
+                    sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                    context.startActivity(Intent.createChooser(sharingIntent, "Share via"));
+                }
+            });
 
+        }
 
     }
 
@@ -109,6 +115,7 @@ public class SaveAdapter extends RecyclerView.Adapter<SaveAdapter.SaveViewHolder
         NewsAdapter.ItemClickListener itemClickListener;
         EasyFlipView myEasyFlipView;
         LinearLayout imageControl, buttonControl;
+        LottieAnimationView nosave;
         public SaveViewHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.imageView);
@@ -117,6 +124,7 @@ public class SaveAdapter extends RecyclerView.Adapter<SaveAdapter.SaveViewHolder
             save = itemView.findViewById(R.id.save);
             share = itemView.findViewById(R.id.share);
             content = itemView.findViewById(R.id.content);
+            nosave = itemView.findViewById(R.id.nosave);
             imageControl = itemView.findViewById(R.id.imageControl);
             buttonControl = itemView.findViewById(R.id.buttonContol);
            // itemClickListener = mClickListener;

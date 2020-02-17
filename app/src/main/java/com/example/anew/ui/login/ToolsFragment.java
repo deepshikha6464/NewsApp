@@ -12,12 +12,15 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.anew.R;
 import com.example.anew.sessionManager;
+import com.example.anew.ui.news.HomeFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -28,7 +31,6 @@ import com.google.android.gms.tasks.Task;
 
 public class ToolsFragment extends Fragment {
     private static final String TAG = "ToolsFragment";
-
     private ToolsViewModel toolsViewModel;
     GoogleSignInClient mGoogleSignInClient;
     int RC_SIGN_IN;
@@ -92,9 +94,12 @@ public class ToolsFragment extends Fragment {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             if(account != null)
             {
+                sessionManager sm  = new sessionManager(getActivity());
+                sm.createLoginSession(account.getDisplayName(),account.getEmail(),account.getPhotoUrl().toString(),true);
                 sucess.setVisibility(View.VISIBLE);
                 Toast.makeText(getActivity(),"Login sucess" ,Toast.LENGTH_SHORT).show();
                 signInButton.setVisibility(View.GONE);
+
             }
             Log.d(TAG, "handleSignInResult: " +account.getEmail() + account.getDisplayName() + account.getPhotoUrl()+ " "+ account.isExpired());
 
@@ -102,9 +107,7 @@ public class ToolsFragment extends Fragment {
             //updateUI(account);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
-           // updateUI(null);
         }
     }
     @Override
@@ -118,7 +121,7 @@ public class ToolsFragment extends Fragment {
         { signInButton.setVisibility(View.GONE);
         sucess.setVisibility(View.GONE);
             sessionManager sm  = new sessionManager(getActivity());
-            sm.createLoginSession(account.getDisplayName(),account.getEmail(),account.getPhotoUrl().toString(),account.isExpired());
+            sm.createLoginSession(account.getDisplayName(),account.getEmail(),account.getPhotoUrl().toString(),true);
           tv.setText("Hey"+" "+account.getDisplayName() +" you are already LoggedIn! ");
           tv.setVisibility(View.VISIBLE);
 
@@ -127,4 +130,5 @@ public class ToolsFragment extends Fragment {
         Log.d(TAG, "onStart: "+ account);
 
     }
+
 }

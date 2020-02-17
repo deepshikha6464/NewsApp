@@ -24,9 +24,7 @@ public class sessionManager {
     // Email address (make variable public to access from outside)
     public static final String IMAGE_URL = "image_url";
 
-    public static final boolean sessionExpired = false;
-
-    public sessionManager(Context context) {
+      public sessionManager(Context context) {
         this.context = context;
         pref = context.getSharedPreferences(KEY_NAME,PRIVATE_MODE);
         editor = pref.edit();
@@ -42,5 +40,17 @@ public class sessionManager {
         //commit changes
 
         editor.commit();
+    }
+
+    public void logoutUser(){
+        // Clearing all data from Shared Preferences
+        editor.clear();
+        editor.commit();
+
+         }
+
+    // Get Login State
+    public boolean isLoggedIn(){
+        return pref.getBoolean(IS_LOGIN, false);
     }
 }

@@ -19,6 +19,7 @@ import com.example.anew.R;
 import com.example.anew.adapter.SaveAdapter;
 import com.example.anew.model.NewsModel;
 import com.example.anew.roomDB.NewsViewModel;
+import com.example.anew.sessionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,15 +30,24 @@ public class GalleryFragment extends Fragment {
     private NewsViewModel newsViewModel;
     private SaveAdapter saveAdapter;
     private ArrayList<NewsModel> mNotes = new ArrayList<>();
+    sessionManager  session ;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        View root;
+        session = new sessionManager(getActivity());
+        if(session.isLoggedIn()) {
+             root = inflater.inflate(R.layout.fragment_gallery, container, false);
+            recyclerView = root.findViewById(R.id.rv_save);
+            newsViewModel = ViewModelProviders.of(this).get(NewsViewModel.class);
+            observerSetup();
+            RecyclerViewSetup();
+        }
+        else
+        {
+             root = inflater.inflate(R.layout.nosave, container, false);
+        }
 
-        View root = inflater.inflate(R.layout.fragment_gallery, container, false);
-        recyclerView = root.findViewById(R.id.rv_save);
-        newsViewModel = ViewModelProviders.of(this).get(NewsViewModel.class);
-        observerSetup();
-        RecyclerViewSetup();
         return root;
     }
 
@@ -66,7 +76,7 @@ public class GalleryFragment extends Fragment {
     {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
-        saveAdapter = new SaveAdapter(mNotes,getActivity());
+        saveAdapter = new SaveAdapter(mNotes,getActivity(),session);
         recyclerView.setAdapter(saveAdapter);
         saveAdapter.notifyDataSetChanged();
         new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerView);
