@@ -9,13 +9,26 @@ import com.example.anew.Repository.NewsRepository;
 import com.example.anew.ui.news.HomeFragment;
 
 import android.util.Log;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -26,9 +39,12 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import static android.view.Gravity.START;
 import static com.example.anew.sessionManager.KEY_EMAIL;
 import static com.example.anew.sessionManager.KEY_NAME;
+import static com.example.anew.ui.login.ToolsFragment.mGoogleSignInClient;
 import static java.lang.Boolean.TRUE;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,13 +55,30 @@ public class MainActivity extends AppCompatActivity {
     ImageView imageView;
     TextView name, email;
     sessionManager sessionManager;
+    GoogleApiClient mGoogleApiClient;
+    DrawerLayout mDrawerLayout;
 
-       @Override
+    @Override
+    protected void onStart() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+        mGoogleApiClient.connect();
+
+        super.onStart();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
            super.onCreate(savedInstanceState);
            setContentView(R.layout.activity_main);
+           sessionManager = new sessionManager(getApplicationContext());
            Toolbar toolbar = findViewById(R.id.toolbar);
            setSupportActionBar(toolbar);
+           mDrawerLayout = findViewById(R.id.drawer_layout);
 //search bar
            searchView = findViewById(R.id.search);
            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -85,13 +118,7 @@ public class MainActivity extends AppCompatActivity {
            name = findViewById(R.id.nameHeader);
            email = findViewById(R.id.textView);
 
-         //  name.setText(sessionManager.KEY_NAME);
-//           email.setText(sessionManager.KEY_EMAIL);
-//           Glide.with(this)
-//                   .load(sessionManager.IMAGE_URL)
-//                   .into(imageView);
-
-       }
+        }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -121,8 +148,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void setUserDetail()
     {
-        sessionManager = new sessionManager(getApplication());
-       if(sessionManager.isLoggedIn() == TRUE)
+       if(sessionManager.isLoggedIn())
         {
             name.setText(sessionManager.KEY_NAME);
             email.setText(sessionManager.KEY_EMAIL);
@@ -132,4 +158,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-}
+
+    public void logout(MenuItem item) {
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(Status status) {
+                        sessionManager.logoutUser();
+                        Toast.makeText(getApplicationContext(),"Logged Out " , Toast.LENGTH_SHORT).show();
+                        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                            mDrawerLayout.closeDrawer(GravityCompat.START);
+                        }
+                    }
+                });
+    }
+
+    }
+

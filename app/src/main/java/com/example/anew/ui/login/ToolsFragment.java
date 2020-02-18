@@ -27,12 +27,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+import java.util.concurrent.Executor;
 
 public class ToolsFragment extends Fragment {
     private static final String TAG = "ToolsFragment";
     private ToolsViewModel toolsViewModel;
-    GoogleSignInClient mGoogleSignInClient;
+   public static  GoogleSignInClient mGoogleSignInClient;
     int RC_SIGN_IN;
 
     //ui
@@ -46,7 +49,7 @@ public class ToolsFragment extends Fragment {
                 ViewModelProviders.of(this).get(ToolsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_tools, container, false);
         tv= root.findViewById(R.id.tv);
-        sucess= root.findViewById(R.id.success);
+         sucess= root.findViewById(R.id.success);
 
 
         // Configure sign-in to request the user's ID, email address, and basic
@@ -67,11 +70,10 @@ public class ToolsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-
                 startActivityForResult(signInIntent, RC_SIGN_IN);
             }
         });
-        return root;
+               return root;
 
 
     }
@@ -99,6 +101,7 @@ public class ToolsFragment extends Fragment {
                 sucess.setVisibility(View.VISIBLE);
                 Toast.makeText(getActivity(),"Login sucess" ,Toast.LENGTH_SHORT).show();
                 signInButton.setVisibility(View.GONE);
+                getActivity().onBackPressed();
 
             }
             Log.d(TAG, "handleSignInResult: " +account.getEmail() + account.getDisplayName() + account.getPhotoUrl()+ " "+ account.isExpired());
@@ -129,6 +132,15 @@ public class ToolsFragment extends Fragment {
         }
         Log.d(TAG, "onStart: "+ account);
 
+    }
+    public  void signout() {
+        mGoogleSignInClient.signOut()
+                .addOnCompleteListener((Executor) this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(getContext(), "logout", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
 }
