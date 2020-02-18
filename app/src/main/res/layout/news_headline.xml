@@ -16,7 +16,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/cardView"
         app:cardElevation="8dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="8dp"
         app:cardCornerRadius="10dp"
         >
         <LinearLayout
@@ -32,12 +34,6 @@
                 android:src="@mipmap/ic_launcher"
                 android:layout_weight="70"
                 android:id="@+id/imageView"/>
-<!--            <TextView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:id="@+id/content"-->
-<!--                android:visibility="gone"/>-->
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -48,15 +44,46 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="60"
-                    >
+                    android:orientation="horizontal"
+                     >
+
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:layout_marginTop="8dp"
                         android:id="@+id/headline"
+                        android:layout_width="313dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:padding="5dp"
                         android:text="Culprit Will Not Be Spared Home Minister Amit Shah On Jamia Firing"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp" />
+                    <!--    expandable layout-->
+                    <TextView
+                        android:layout_width="313dp"
+                        android:id="@+id/content"
+                        android:text="qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq"
+                        android:maxLines="50"
+                        android:textSize="16sp"
+                        android:singleLine="false"
+                        android:visibility="gone"
+                        android:layout_height="wrap_content"/>
+
+                    <ImageView
+                        android:layout_width="33dp"
+                        android:layout_marginTop="8dp"
+                        android:paddingTop="8dp"
+                        android:id="@+id/down"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="false"
+                        android:background="@drawable/down_arrow" />
+                    <ImageView
+                        android:layout_width="33dp"
+                        android:layout_marginTop="8dp"
+                        android:paddingTop="8dp"
+                        android:id="@+id/up_arrow"
+                        android:visibility="gone"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="false"
+                        android:background="@drawable/ic_keyboard_arrow_up_black_24dp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -113,10 +140,13 @@
 
         </LinearLayout>
 
+
+
     </androidx.cardview.widget.CardView>
 
 
 </LinearLayout>
+
 
 
 

@@ -49,7 +49,7 @@ this.context = context;
         this.newsList = newsList;
         this.context = context;
         this.session = session;
-       // this.mClickListener = itemClickListener;
+
     }
 
     @NonNull
@@ -126,6 +126,7 @@ this.context = context;
         LottieAnimationView load, save, share;
         ItemClickListener itemClickListener;
         EasyFlipView myEasyFlipView;
+        ImageView down, up;
         LinearLayout imageControl, buttonControl;
 
         public NewsViewHolder(@NonNull View itemView, ItemClickListener mClickListener) {
@@ -138,6 +139,8 @@ this.context = context;
             content = itemView.findViewById(R.id.content);
             imageControl = itemView.findViewById(R.id.imageControl);
             buttonControl = itemView.findViewById(R.id.buttonContol);
+            up = itemView.findViewById(R.id.up_arrow);
+            down = itemView.findViewById(R.id.down);
             itemClickListener = mClickListener;
             myEasyFlipView = itemView.findViewById(R.id.myEasyFlipView);
             itemView.setOnClickListener(this);
@@ -147,7 +150,22 @@ this.context = context;
         @Override
         public void onClick(View v) {
 
-            myEasyFlipView.flipTheView();
+            //myEasyFlipView.flipTheView();
+          if(down.getVisibility() == View.VISIBLE)
+          {
+              headline.setVisibility(View.GONE);
+              content.setVisibility(View.VISIBLE);
+              down.setVisibility(View.GONE);
+              up.setVisibility(View.VISIBLE);
+
+          }
+          else
+
+          {       headline.setVisibility(View.VISIBLE);
+                  content.setVisibility(View.GONE);
+                  up.setVisibility(View.GONE);
+                  down.setVisibility(View.VISIBLE);
+          }
             if (mClickListener != null) {
                 mClickListener.onItemClick(v, getAdapterPosition());
                }
