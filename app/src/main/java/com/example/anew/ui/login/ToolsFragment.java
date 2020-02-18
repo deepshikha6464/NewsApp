@@ -18,6 +18,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.anew.MainActivity;
 import com.example.anew.R;
 import com.example.anew.sessionManager;
 import com.example.anew.ui.news.HomeFragment;
@@ -101,6 +102,7 @@ public class ToolsFragment extends Fragment {
                 sucess.setVisibility(View.VISIBLE);
                 Toast.makeText(getActivity(),"Login sucess" ,Toast.LENGTH_SHORT).show();
                 signInButton.setVisibility(View.GONE);
+                MainActivity.logout.setEnabled(true);
                 getActivity().onBackPressed();
 
             }
@@ -113,34 +115,36 @@ public class ToolsFragment extends Fragment {
             Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        chkSignIn();
+    }
+
     @Override
     public void onStart() {
         super.onStart();
 
         // Check for existing Google Sign In account, if the user is already signed in
 // the GoogleSignInAccount will be non-null.
+        chkSignIn();
+
+    }
+
+
+    public  void chkSignIn() {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
         if(account !=null)
         { signInButton.setVisibility(View.GONE);
-        sucess.setVisibility(View.GONE);
+            sucess.setVisibility(View.GONE);
             sessionManager sm  = new sessionManager(getActivity());
             sm.createLoginSession(account.getDisplayName(),account.getEmail(),account.getPhotoUrl().toString(),true);
-          tv.setText("Hey"+" "+account.getDisplayName() +" you are already LoggedIn! ");
-          tv.setVisibility(View.VISIBLE);
+            tv.setText("Hey"+" "+account.getDisplayName() +" you are already LoggedIn! ");
+            tv.setVisibility(View.VISIBLE);
 
 
         }
-        Log.d(TAG, "onStart: "+ account);
-
-    }
-    public  void signout() {
-        mGoogleSignInClient.signOut()
-                .addOnCompleteListener((Executor) this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(getContext(), "logout", Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 
 }

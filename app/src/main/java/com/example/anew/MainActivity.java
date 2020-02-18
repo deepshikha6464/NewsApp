@@ -1,5 +1,6 @@
 package com.example.anew;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -16,6 +17,8 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.GravityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -41,12 +44,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static android.view.Gravity.START;
-import static com.example.anew.sessionManager.KEY_EMAIL;
-import static com.example.anew.sessionManager.KEY_NAME;
-import static com.example.anew.ui.login.ToolsFragment.mGoogleSignInClient;
-import static java.lang.Boolean.TRUE;
-
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private AppBarConfiguration mAppBarConfiguration;
@@ -57,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     sessionManager sessionManager;
     GoogleApiClient mGoogleApiClient;
     DrawerLayout mDrawerLayout;
+   public static MenuItem logout;
 
     @Override
     protected void onStart() {
@@ -103,7 +101,10 @@ public class MainActivity extends AppCompatActivity {
 
            DrawerLayout drawer = findViewById(R.id.drawer_layout);
            NavigationView navigationView = findViewById(R.id.nav_view);
-           // Passing each menu ID as a set of Ids because each
+        Menu menu = navigationView.getMenu();
+        logout = menu.findItem(R.id.nav_logout);
+
+        // Passing each menu ID as a set of Ids because each
            // menu should be considered as top level destinations.
            mAppBarConfiguration = new AppBarConfiguration.Builder(
                    R.id.nav_news, R.id.nav_gallery,
@@ -136,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (!searchView.isIconified()) {
+        if (!searchView.isIconified() ){
             searchView.onActionViewCollapsed();
             this.getFragmentManager().popBackStack();
             HomeFragment.buttonContainer.setVisibility(View.VISIBLE);
@@ -165,13 +166,16 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResult(Status status) {
                         sessionManager.logoutUser();
-                        Toast.makeText(getApplicationContext(),"Logged Out " , Toast.LENGTH_SHORT).show();
                         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-                            mDrawerLayout.closeDrawer(GravityCompat.START);
+                              mDrawerLayout.closeDrawer(GravityCompat.START);
+                            onBackPressed();
+                            Toast.makeText(getApplicationContext(),"Logged Out " , Toast.LENGTH_SHORT).show();
+
                         }
+
                     }
                 });
     }
 
-    }
+}
 
