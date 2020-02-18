@@ -55,6 +55,11 @@ dependencies {
 
     //google authentication
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    //chips
+
+    implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
+    implementation 'com.google.android.material:material:1.0.0-alpha1'
+
 
 
 }

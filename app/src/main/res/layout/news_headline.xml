@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/cardView"
+        app:cardElevation="8dp"
         android:layout_marginBottom="4dp"
         app:cardCornerRadius="10dp"
         >
@@ -42,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="30"
                 android:weightSum="100"
-                android:orientation="vertical">
+                 android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -55,8 +56,9 @@
                         android:layout_marginTop="8dp"
                         android:id="@+id/headline"
                         android:text="Culprit Will Not Be Spared Home Minister Amit Shah On Jamia Firing"
-                        android:textSize="18sp"/>
+                        android:textSize="16sp"/>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

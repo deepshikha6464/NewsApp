@@ -33,6 +33,7 @@ import com.example.anew.adapter.NewsAdapter;
 import com.example.anew.model.NewsModel;
 import com.example.anew.roomDB.NewsViewModel;
 import com.example.anew.sessionManager;
+import com.google.android.material.chip.Chip;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,7 +52,8 @@ public class HomeFragment extends Fragment implements NewsAdapter.ItemClickListe
 RecyclerView recyclerView;
 NewsAdapter mNewsAdapter;
 List<NewsModel> newsModels;
-Button head,gen,sci,spo,tech,busi,ent,hel;
+//Button head,gen,sci,spo,tech,busi,ent,hel;
+Chip head,gen,sci,spo,tech,busi,ent,hel;
 String query;
 public static  LinearLayout buttonContainer;
 LottieAnimationView rvPlaceHolder,rvNoData,newData;

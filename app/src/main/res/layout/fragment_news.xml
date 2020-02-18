@@ -5,122 +5,76 @@
     android:orientation="vertical"
     android:layout_height="match_parent">
 
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--                android:text="rr"/>-->
         <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none"
             android:overScrollMode="never"
-            android:id="@+id/scroll">
-        <LinearLayout
-            android:layout_width="match_parent"
+            >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/button_container"
+                    android:visibility="visible"
+                  >
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/button_container"
-            android:visibility="visible"
-            android:padding="8dp">
-                <Button
+            app:singleSelection="true"
+            android:layout_marginTop="16dp">
+
+                <com.google.android.material.chip.Chip
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Top HeadLines"
-                    android:padding="2dp"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:id="@+id/headline"
-                    android:layout_margin="5dp"
-                    android:includeFontPadding="true"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                     android:background="@drawable/button_border"
-                    />
+                    android:text="Top HeadLines" />
 
-                <Button
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Business"
-                    android:id="@+id/business"
-                    android:padding="2dp"
-                    android:layout_margin="5dp"
-                    android:includeFontPadding="true"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:background="@drawable/button_border"
-                    />
-                <Button
+                    android:id="@+id/business"/>
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Entertainment"
-                    android:id="@+id/entertainment"
-                    android:padding="2dp"
-                    android:layout_margin="5dp"
-                    android:includeFontPadding="true"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:background="@drawable/button_border"
-                    />
-<!--                <Button-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="General"-->
-<!--                    android:id="@+id/general"-->
-<!--                    android:padding="2dp"-->
-<!--                    android:layout_margin="5dp"-->
-<!--                    android:includeFontPadding="true"-->
-<!--                    android:paddingLeft="20dp"-->
-<!--                    android:paddingRight="20dp"-->
-<!--                    android:background="@drawable/button_border"-->
-<!--                    />-->
-                <Button
+                    android:id="@+id/entertainment"/>
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Health"
-                    android:id="@+id/health"
-                    android:padding="2dp"
-                    android:layout_margin="5dp"
-                    android:includeFontPadding="true"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:background="@drawable/button_border"
-                    />
-                <Button
+                    android:id="@+id/health"/>
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Science"
-                    android:id="@+id/science"
-                    android:padding="2dp"
-                    android:layout_margin="5dp"
-                    android:includeFontPadding="true"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:background="@drawable/button_border"
-                    />
-               <Button
+                    android:id="@+id/science"/>
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sports"
-                   android:id="@+id/sports"
-                    android:padding="2dp"
-                    android:layout_margin="5dp"
-                    android:includeFontPadding="true"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:background="@drawable/button_border"
-                    />
-               <Button
+                    android:id="@+id/sports"/>
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Technology"
-                   android:id="@+id/technology"
-                    android:padding="2dp"
-                    android:layout_margin="5dp"
-                    android:includeFontPadding="true"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:background="@drawable/button_border"
-                    />
-        </LinearLayout>
-</HorizontalScrollView>
+                    android:id="@+id/technology"/>
+
+
+        </com.google.android.material.chip.ChipGroup>
+                </LinearLayout>
+        </HorizontalScrollView>
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -153,19 +107,19 @@
             app:lottie_loop="true"
             android:visibility="gone"
             app:lottie_speed="1.25" />
+
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/rvNewData"
+            android:layout_width="305dp"
+            android:layout_height="99dp"
             android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            android:layout_weight="20"
+            android:visibility="gone"
             app:lottie_autoPlay="true"
             app:lottie_fileName="newData.json"
             app:lottie_loop="true"
-            android:layout_weight="20"
-            android:visibility="gone"
             app:lottie_speed="1.25" />
 </RelativeLayout>
 
