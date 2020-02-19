@@ -24,8 +24,6 @@ import com.example.anew.R;
 import com.example.anew.model.NewsModel;
 import com.example.anew.roomDB.NewsViewModel;
 import com.example.anew.sessionManager;
-import com.wajahatkarim3.easyflipview.EasyFlipView;
-
 import java.util.List;
 
 import static com.example.anew.ui.saved.GalleryFragment.nosaveLayout;
@@ -117,7 +115,6 @@ public class SaveAdapter extends RecyclerView.Adapter<SaveAdapter.SaveViewHolder
         TextView headline,content;
         LottieAnimationView load, save, share;
         NewsAdapter.ItemClickListener itemClickListener;
-        EasyFlipView myEasyFlipView;
         LinearLayout imageControl, buttonControl;
         public SaveViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -130,7 +127,7 @@ public class SaveAdapter extends RecyclerView.Adapter<SaveAdapter.SaveViewHolder
 
             imageControl = itemView.findViewById(R.id.imageControl);
             buttonControl = itemView.findViewById(R.id.buttonContol);
-           myEasyFlipView = itemView.findViewById(R.id.myEasyFlipView);
+
                    }
     }
 }

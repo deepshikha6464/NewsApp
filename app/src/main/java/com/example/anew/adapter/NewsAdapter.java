@@ -28,7 +28,7 @@ import com.example.anew.roomDB.NewsViewModel;
 import com.example.anew.sessionManager;
 import com.example.anew.ui.login.ToolsFragment;
 import com.example.anew.ui.news.HomeFragment;
-import com.wajahatkarim3.easyflipview.EasyFlipView;
+
 
 import java.util.List;
 
@@ -125,7 +125,7 @@ this.context = context;
         TextView headline,content;
         LottieAnimationView load, save, share;
         ItemClickListener itemClickListener;
-        EasyFlipView myEasyFlipView;
+
         ImageView down, up;
         LinearLayout imageControl, buttonControl;
 
@@ -142,7 +142,7 @@ this.context = context;
             up = itemView.findViewById(R.id.up_arrow);
             down = itemView.findViewById(R.id.down);
             itemClickListener = mClickListener;
-            myEasyFlipView = itemView.findViewById(R.id.myEasyFlipView);
+
             itemView.setOnClickListener(this);
 
                    }

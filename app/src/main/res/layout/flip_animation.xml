@@ -4,25 +4,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <com.wajahatkarim3.easyflipview.EasyFlipView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/myEasyFlipView"
-        app:flipOnTouch="false"
-        app:flipEnabled="true"
-        app:flipDuration="400"
-        app:flipType="vertical"
-        app:flipFrom="front"
-        app:autoFlipBack="false"
-        app:autoFlipBackTime="1000"
-        >
-
-        <!-- Back Layout Goes Here -->
-        <include layout="@layout/news_content"/>
 
         <!-- Front Layout Goes Here -->
         <include layout="@layout/news_headline"/>
 
-    </com.wajahatkarim3.easyflipview.EasyFlipView>
 
 </LinearLayout>

@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -44,6 +47,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.view.View.*;
+import static androidx.core.content.ContextCompat.getSystemService;
+import static com.example.anew.MainActivity.isOnline;
+import static com.example.anew.MainActivity.netStatus;
 import static com.example.anew.NetworkUtil.constants.API;
 import static com.example.anew.NetworkUtil.constants.API_KEY;
 
@@ -100,8 +106,7 @@ private NewsViewModel newsViewModel;
          recyclerView.setVisibility(GONE);
          rvPlaceHolder.setVisibility(VISIBLE);
          newData.setVisibility(GONE);
-        //fetchNews("everything", "");
-        fetchNews("top-headlines", "country=in");
+           networkCall();
            return view;
 
 
@@ -220,7 +225,17 @@ private NewsViewModel newsViewModel;
        query=  makeQuery(id);
         newData.setVisibility(VISIBLE);
         recyclerView.setVisibility(GONE);
-        fetchNews("top-headlines", query);
+        if(isOnline(getActivity())) {
+            fetchNews("top-headlines", query);
+        }
+        else
+        {
+            Toast.makeText(getActivity(),"NoInternet", Toast.LENGTH_LONG).show();
+            recyclerView.setVisibility(GONE);
+            rvNoData.setVisibility(VISIBLE);
+            rvPlaceHolder.setVisibility(GONE);
+        }
+
 
     }
 
@@ -252,4 +267,22 @@ private NewsViewModel newsViewModel;
 
         }
     }
+
+    private void networkCall()
+    {
+        if(isOnline(getActivity())) {
+            fetchNews("top-headlines", "country=in");
+        }
+        else
+        {
+            Toast.makeText(getActivity(),"NoInternet", Toast.LENGTH_LONG).show();
+            recyclerView.setVisibility(GONE);
+            rvNoData.setVisibility(VISIBLE);
+            rvPlaceHolder.setVisibility(GONE);
+
+
+        }
+    }
+
+
 }

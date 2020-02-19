@@ -1,7 +1,10 @@
 package com.example.anew;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
@@ -52,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     GoogleApiClient mGoogleApiClient;
     DrawerLayout mDrawerLayout;
    public static MenuItem logout;
+   public static boolean netStatus = false;
 
       @Override
     protected void onStart() {
@@ -184,6 +188,19 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    public static boolean isOnline(Context ctx) {
+        if (ctx == null)
+            return false;
+
+        ConnectivityManager cm =
+                (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        }
+        return false;
     }
 
 }
