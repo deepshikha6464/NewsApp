@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,8 +32,6 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-import java.util.concurrent.Executor;
-
 public class ToolsFragment extends Fragment {
     private static final String TAG = "ToolsFragment";
     private ToolsViewModel toolsViewModel;
@@ -41,8 +40,8 @@ public class ToolsFragment extends Fragment {
 
     //ui
     TextView tv;
+    LinearLayout l, lv2;
     SignInButton signInButton;
-    LottieAnimationView sucess;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -50,10 +49,9 @@ public class ToolsFragment extends Fragment {
                 ViewModelProviders.of(this).get(ToolsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_tools, container, false);
         tv= root.findViewById(R.id.tv);
-         sucess= root.findViewById(R.id.success);
-
-
-        // Configure sign-in to request the user's ID, email address, and basic
+        l= root.findViewById(R.id.ltv);
+        lv2= root.findViewById(R.id.ltv2);
+                 // Configure sign-in to request the user's ID, email address, and basic
 // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -99,10 +97,10 @@ public class ToolsFragment extends Fragment {
             {
                 sessionManager sm  = new sessionManager(getActivity());
                 sm.createLoginSession(account.getDisplayName(),account.getEmail(),account.getPhotoUrl().toString(),true);
-                sucess.setVisibility(View.VISIBLE);
                 Toast.makeText(getActivity(),"Login sucess" ,Toast.LENGTH_SHORT).show();
                 signInButton.setVisibility(View.GONE);
                 MainActivity.logout.setEnabled(true);
+
                 getActivity().onBackPressed();
 
             }
@@ -136,12 +134,13 @@ public class ToolsFragment extends Fragment {
     public  void chkSignIn() {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
         if(account !=null)
-        { signInButton.setVisibility(View.GONE);
-            sucess.setVisibility(View.GONE);
+        {   signInButton.setVisibility(View.GONE);
+        lv2.setVisibility(View.GONE);
             sessionManager sm  = new sessionManager(getActivity());
             sm.createLoginSession(account.getDisplayName(),account.getEmail(),account.getPhotoUrl().toString(),true);
-            tv.setText("Hey"+" "+account.getDisplayName() +" you are already LoggedIn! ");
+            tv.setText("Hey"+" "+account.getDisplayName() + '\n'+ "you are already LoggedIn! ");
             tv.setVisibility(View.VISIBLE);
+            l.setVisibility(View.VISIBLE);
 
 
         }

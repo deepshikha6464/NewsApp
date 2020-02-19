@@ -28,6 +28,8 @@ import com.wajahatkarim3.easyflipview.EasyFlipView;
 
 import java.util.List;
 
+import static com.example.anew.ui.saved.GalleryFragment.nosaveLayout;
+
 public class SaveAdapter extends RecyclerView.Adapter<SaveAdapter.SaveViewHolder>  {
     private static final String TAG = "SaveAdapter";
   //  private LiveData<List<NewsModel>> savedNews;
@@ -53,7 +55,6 @@ public class SaveAdapter extends RecyclerView.Adapter<SaveAdapter.SaveViewHolder
     @Override
     public void onBindViewHolder(@NonNull final SaveViewHolder holder, final int position) {
          {
-           // holder.nosave.setVisibility(View.GONE);
             holder.headline.setText(news.get(position).getTitle());
             Glide.with(context)
                     .load(news.get(position).getUrlToImage())
@@ -97,13 +98,16 @@ public class SaveAdapter extends RecyclerView.Adapter<SaveAdapter.SaveViewHolder
 
     }
 
-//    public void setSavedNews(List<NewsModel> newNews) {
-//        this.news = newNews;
-//        notifyDataSetChanged();
-//    }
-
     @Override
     public int getItemCount() {
+        if(news.size() == 0)
+        {
+            nosaveLayout.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            nosaveLayout.setVisibility(View.GONE);
+        }
         return news.size();
     }
 
@@ -115,7 +119,6 @@ public class SaveAdapter extends RecyclerView.Adapter<SaveAdapter.SaveViewHolder
         NewsAdapter.ItemClickListener itemClickListener;
         EasyFlipView myEasyFlipView;
         LinearLayout imageControl, buttonControl;
-        LottieAnimationView nosave;
         public SaveViewHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.imageView);
@@ -124,12 +127,10 @@ public class SaveAdapter extends RecyclerView.Adapter<SaveAdapter.SaveViewHolder
             save = itemView.findViewById(R.id.save);
             share = itemView.findViewById(R.id.share);
             content = itemView.findViewById(R.id.content);
-            nosave = itemView.findViewById(R.id.nosave);
+
             imageControl = itemView.findViewById(R.id.imageControl);
             buttonControl = itemView.findViewById(R.id.buttonContol);
-           // itemClickListener = mClickListener;
-            myEasyFlipView = itemView.findViewById(R.id.myEasyFlipView);
-           // itemView.setOnClickListener(this);
-        }
+           myEasyFlipView = itemView.findViewById(R.id.myEasyFlipView);
+                   }
     }
 }

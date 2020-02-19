@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -8,4 +8,34 @@
         android:layout_height="match_parent"
         android:visibility="visible"
         android:id="@+id/rv_save"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/nosaveLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        android:background="#E0F4FD"
+        android:visibility="visible">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/nosave"
+            android:layout_width="243dp"
+            android:layout_height="326dp"
+            android:layout_gravity="center_horizontal"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="nosave.json"
+            app:lottie_loop="true"
+            app:lottie_speed="1.25" />
+
+        <TextView
+            android:layout_width="263dp"
+            android:layout_height="52dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="85dp"
+            android:layout_marginEnd="89dp"
+            android:lines="1"
+            android:text="Saved News will be displayed here"
+            android:textSize="16sp" />
+    </LinearLayout>
+</RelativeLayout>

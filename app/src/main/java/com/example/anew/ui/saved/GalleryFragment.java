@@ -1,12 +1,18 @@
 package com.example.anew.ui.saved;
 
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.RenderNode;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -24,11 +30,14 @@ import com.example.anew.sessionManager;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
+
 public class GalleryFragment extends Fragment {
     private static final String TAG = "GalleryFragment";
     RecyclerView recyclerView;
     private NewsViewModel newsViewModel;
     private SaveAdapter saveAdapter;
+    public static LinearLayout nosaveLayout;
     private ArrayList<NewsModel> mNotes = new ArrayList<>();
     sessionManager  session ;
 
@@ -36,16 +45,21 @@ public class GalleryFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root;
         session = new sessionManager(getActivity());
-        if(session.isLoggedIn()) {
-             root = inflater.inflate(R.layout.fragment_gallery, container, false);
-            recyclerView = root.findViewById(R.id.rv_save);
-            newsViewModel = ViewModelProviders.of(this).get(NewsViewModel.class);
-            observerSetup();
-            RecyclerViewSetup();
-        }
+        root = inflater.inflate(R.layout.fragment_gallery, container, false);
+        recyclerView = root.findViewById(R.id.rv_save);
+        nosaveLayout = root.findViewById(R.id.nosaveLayout);
+        newsViewModel = ViewModelProviders.of(this).get(NewsViewModel.class);
+        observerSetup();
+        RecyclerViewSetup();
+        if(session.isLoggedIn() ) {
+
+                recyclerView.setVisibility(View.VISIBLE);
+                nosaveLayout.setVisibility(View.GONE);
+          }
         else
         {
-             root = inflater.inflate(R.layout.nosave, container, false);
+           recyclerView.setVisibility(View.GONE);
+           nosaveLayout.setVisibility(View.VISIBLE);
         }
 
         return root;
@@ -93,6 +107,16 @@ public class GalleryFragment extends Fragment {
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             newsViewModel.deleteItem(mNotes.get(viewHolder.getAdapterPosition()));
 
+        }
+
+        @Override
+        public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+            new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                    .addBackgroundColor(ContextCompat.getColor(getContext(), R.color.my_background))
+                    .addActionIcon(R.drawable.ic_delete_black_24dp)
+                    .create()
+                    .decorate();
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         }
     };
 

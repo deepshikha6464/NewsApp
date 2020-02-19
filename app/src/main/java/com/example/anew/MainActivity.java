@@ -1,37 +1,34 @@
 package com.example.anew;
 
-import android.content.ClipData;
+
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
-import com.example.anew.NetworkUtil.NetworkCall;
 import com.example.anew.Repository.NewsRepository;
 import com.example.anew.ui.news.HomeFragment;
 
 import android.util.Log;
-import android.view.Gravity;
+
 import android.view.MenuItem;
 import android.view.View;
 
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.GravityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -56,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout mDrawerLayout;
    public static MenuItem logout;
 
-    @Override
+      @Override
     protected void onStart() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -103,6 +100,12 @@ public class MainActivity extends AppCompatActivity {
            NavigationView navigationView = findViewById(R.id.nav_view);
         Menu menu = navigationView.getMenu();
         logout = menu.findItem(R.id.nav_logout);
+        if(sessionManager.isLoggedIn()==true)
+        {
+            logout.setEnabled(true);
+        }
+        else
+            logout.setEnabled(false);
 
         // Passing each menu ID as a set of Ids because each
            // menu should be considered as top level destinations.
@@ -137,11 +140,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (!searchView.isIconified() ){
+
+       if ( !searchView.isIconified())
+        {
+
             searchView.onActionViewCollapsed();
             this.getFragmentManager().popBackStack();
             HomeFragment.buttonContainer.setVisibility(View.VISIBLE);
-                  } else {
+
+        }
+        else
+            {
             super.onBackPressed();
         }
 
@@ -165,12 +174,12 @@ public class MainActivity extends AppCompatActivity {
                 new ResultCallback<Status>() {
                     @Override
                     public void onResult(Status status) {
-                        sessionManager.logoutUser();
+                       sessionManager.logoutUser();
                         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
                               mDrawerLayout.closeDrawer(GravityCompat.START);
                             onBackPressed();
                             Toast.makeText(getApplicationContext(),"Logged Out " , Toast.LENGTH_SHORT).show();
-
+                            logout.setEnabled(false);
                         }
 
                     }

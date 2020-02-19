@@ -1,37 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout android:layout_width="match_parent"
+<RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_button"
-        android:layout_width="wrap_content"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        />
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/success"
-        android:layout_width="236dp"
-        android:layout_height="240dp"
-        android:layout_centerInParent="true"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone"
-        app:lottie_autoPlay="true"
-        app:lottie_fileName="sucess.json"
-        app:lottie_loop="false"
-        app:lottie_speed="1.25" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv"
-        android:textSize="20sp"
-        android:layout_gravity="center"
-        android:visibility="gone"
-       />
+    <LinearLayout
+        android:id="@+id/ltv2"
+        android:layout_width="match_parent"
+        android:layout_height="502dp"
+        android:visibility="visible"
+        android:orientation="vertical">
 
-    </FrameLayout>
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="375dp"
+            android:layout_height="342dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_weight="20"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="signin.json"
+            app:lottie_loop="true"
+            app:lottie_speed="1.25" />
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="64dp"
+             />
+    </LinearLayout>
+<!-- logged in screen -->
+    <LinearLayout
+        android:id="@+id/ltv"
+        android:layout_width="372dp"
+        android:layout_height="173dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="30dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="68dp"
+            android:layout_height="126dp"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="loginperson.json"
+            app:lottie_loop="true"
+            app:lottie_speed="1.25" />
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="289dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_vertical"
+            android:textSize="16sp"
+            android:visibility="visible" />
+    </LinearLayout>
+
+</RelativeLayout>
