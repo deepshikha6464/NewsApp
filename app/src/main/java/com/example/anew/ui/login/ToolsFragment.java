@@ -32,6 +32,8 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import static com.example.anew.MainActivity.isOnline;
+
 public class ToolsFragment extends Fragment {
     private static final String TAG = "ToolsFragment";
     private ToolsViewModel toolsViewModel;
@@ -68,8 +70,15 @@ public class ToolsFragment extends Fragment {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                startActivityForResult(signInIntent, RC_SIGN_IN);
+                if(isOnline(getActivity())) {
+                    Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+                    startActivityForResult(signInIntent, RC_SIGN_IN);
+                }
+                else
+                {
+                    Toast.makeText(getActivity(),"Could not Sign in No Internet", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
                return root;
