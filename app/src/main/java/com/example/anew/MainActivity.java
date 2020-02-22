@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.GravityCompat;
 
@@ -73,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
         mGoogleApiClient.connect();
-
         super.onStart();
     }
 
@@ -113,6 +113,34 @@ public class MainActivity extends AppCompatActivity {
            NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
            NavigationUI.setupWithNavController(navigationView, navController);
 
+           mAppBarConfiguration.getDrawerLayout().setDrawerListener(new DrawerLayout.DrawerListener() {
+               @Override
+               public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+
+               }
+
+               @Override
+               public void onDrawerOpened(@NonNull View drawerView) {
+                   if(sessionManager.isLoggedIn()==true)
+                   {
+                       setUserDetail();
+                   }
+                   else
+                   {
+                       setDefaultDetail();
+                   }
+               }
+
+               @Override
+               public void onDrawerClosed(@NonNull View drawerView) {
+
+               }
+
+               @Override
+               public void onDrawerStateChanged(int newState) {
+
+               }
+           });
 
         logout = menu.findItem(R.id.nav_logout);
         if(sessionManager.isLoggedIn()==true)
@@ -227,5 +255,21 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    private  void setDefaultDetail()
+    {
+        name.setText("Hello User!");
+        email.setText("email.id@domain.com");
+        Glide.with(this)
+                .load(R.drawable.login_pic)
+                .apply(RequestOptions.circleCropTransform())
+                .into(imageView);
+
+    }
 }
 
