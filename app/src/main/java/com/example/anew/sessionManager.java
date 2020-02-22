@@ -53,4 +53,5 @@ public class sessionManager {
     public boolean isLoggedIn(){
         return pref.getBoolean(IS_LOGIN, false);
     }
+
 }
