@@ -102,9 +102,6 @@ public class MainActivity extends AppCompatActivity {
         name = headerView.findViewById(R.id.nameHeader);
         email =headerView.findViewById(R.id.textView);
 
-           setUserDetail();
-
-
         // Passing each menu ID as a set of Ids because each
            // menu should be considered as top level destinations.
            mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -121,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         if(sessionManager.isLoggedIn()==true)
         {
             logout.setEnabled(true);
-
+            setUserDetail();
         }
         else
         {
@@ -190,9 +187,6 @@ public class MainActivity extends AppCompatActivity {
     }
     public void setUserDetail()
     {
-
-           // name.setText("deeps");
-
         String n = sessionManager.pref.getString(KEY_NAME, "");
         String e = sessionManager.pref.getString(KEY_EMAIL, "");
         String img = sessionManager.pref.getString(IMAGE_URL, "");
@@ -201,10 +195,7 @@ public class MainActivity extends AppCompatActivity {
             Glide.with(this)
                     .load(img)
                     .apply(RequestOptions.circleCropTransform())
-                    .into(imageView);
-
-
-    }
+                    .into(imageView);    }
 
     public void logout(MenuItem item) {
         Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
