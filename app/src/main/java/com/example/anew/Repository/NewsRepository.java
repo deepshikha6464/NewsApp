@@ -37,7 +37,7 @@ public class NewsRepository {
     }
 
     public LiveData<List<NewsModel>> getAllData() {
-       // mAllData = mNewsDao.getAllData();//repository has access to the DAO, it can make calls to the data access methods
+      //repository has access to the DAO, it can make calls to the data access methods
         return mAllData;
     }
 //
@@ -81,8 +81,6 @@ public class NewsRepository {
     public LiveData<List<NewsModel>> getAllSavedNews() {
         return mNewsDao.getAllSavedNews();
     }
-
-
 
 
 

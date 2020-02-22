@@ -15,6 +15,7 @@ public class NewsViewModel extends AndroidViewModel {
 
     private NewsRepository mNewsRepository;
     private LiveData<List<NewsModel>> mListLiveData;
+    private String title;
 
         public NewsViewModel(@NonNull Application application) {
         super(application);
@@ -37,5 +38,7 @@ public class NewsViewModel extends AndroidViewModel {
     public void deleteItem(NewsModel dataItem) {
         mNewsRepository.deleteItem(dataItem);
     }
+
+
 
 }

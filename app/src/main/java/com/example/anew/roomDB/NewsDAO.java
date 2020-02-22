@@ -31,6 +31,10 @@ public interface NewsDAO {
     @Query("SELECT * FROM news_table")
     public LiveData<List<NewsModel>> getAllSavedNews();
 
+    //get particular saved news
+    @Query("SELECT 'title' FROM news_table WHERE 'title' LIKE :title")
+    public String getTitle( String title);
+
     //Delete All
     @Query("DELETE FROM news_table")
     void deleteAll();
