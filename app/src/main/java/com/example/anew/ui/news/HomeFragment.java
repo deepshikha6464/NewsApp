@@ -345,26 +345,25 @@ public class HomeFragment extends Fragment implements NewsAdapter.ItemClickListe
         public void onReceive(Context context, Intent intent) {
             try
             {
-                if (isOnline(context) )
-                {
+                if(oncreate == false) {
 
-                    query = getSelectedChip();
-                    String endpoint = "top-headlines";
-                    if(query == null)
-                    {
-                        networkCall(endpoint,"country=in");
 
+                    if (isOnline(context)) {
+
+                        query = getSelectedChip();
+                        String endpoint = "top-headlines";
+                        if (query == null) {
+                            networkCall(endpoint, "country=in");
+
+                        } else {
+                            networkCall(endpoint, query);
+                        }
+                        if (oncreate == false)
+                            showSnackbar("Back Online", "#3a9fbf");
+
+                    } else {
+                        showSnackbar("Internet Connection Lost", "#ff0000");
                     }
-                    else
-                    {
-                        networkCall(endpoint,query);
-                    }
-                    if(oncreate == false)
-                   showSnackbar("Back Online","#3a9fbf" );
-
-                } else
-                    {
-                    showSnackbar("Internet Connection Lost" ,"#ff0000" );
                 }
 
             } catch (NullPointerException e) {
